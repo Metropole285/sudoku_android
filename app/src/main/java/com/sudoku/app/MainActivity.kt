@@ -5,6 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,6 +27,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            var isDarkTheme by rememberSaveable { mutableStateOf(false) }
+            SudokuTheme(isDarkTheme = isDarkTheme) {
             SudokuTheme {
                 val navController = rememberNavController()
                 val puzzleRepository = remember { AppModule.providePuzzleRepository() }
@@ -42,6 +48,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onOpenLeaderboard = {
                                 navController.navigate(Routes.Leaderboard)
+                            },
+                            isDarkTheme = isDarkTheme,
+                            onToggleTheme = { isDarkTheme = it }
                             }
                         )
                     }
@@ -57,6 +66,11 @@ class MainActivity : ComponentActivity() {
                             uiState = uiState,
                             onStartGame = { selected -> gameViewModel.startNewGame(selected) },
                             onValidate = { gameViewModel.validateCurrentPuzzle() },
+                            onSelectCell = { row, col -> gameViewModel.selectCell(row, col) },
+                            onNumberInput = { value -> gameViewModel.inputNumber(value) },
+                            onErase = { gameViewModel.erase() },
+                            onUndo = { gameViewModel.undo() },
+                            onRedo = { gameViewModel.redo() },
                             onExit = { navController.popBackStack() }
                         )
                     }

@@ -19,6 +19,8 @@ class InMemoryPuzzleRepository(
 
     override suspend fun validateSolution(puzzle: Puzzle): Boolean {
         val grid = puzzle.toGrid()
+        if (grid.any { it == 0 }) return false
+        return grid.contentEquals(puzzle.solution)
         return solver.isValidSolution(grid)
     }
 

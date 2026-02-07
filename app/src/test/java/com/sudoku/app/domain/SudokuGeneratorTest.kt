@@ -21,6 +21,7 @@ class SudokuGeneratorTest {
                 grid[cell.row * 9 + cell.col] = cell.value
             }
             assertTrue(generator.isSolvable(grid))
+            assertEquals(1, solver.countSolutions(grid.clone(), limit = 2))
             val solved = grid.clone()
             assertTrue(solver.solve(solved))
         }
