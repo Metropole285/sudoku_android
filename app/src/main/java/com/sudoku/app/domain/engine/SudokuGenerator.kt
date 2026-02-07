@@ -50,19 +50,7 @@ class SudokuGenerator(
             Difficulty.MEDIUM -> 45
             Difficulty.HARD -> 55
         }
-        val positions = (0 until 81).shuffled(Random).toMutableList()
-        var removed = 0
-        while (positions.isNotEmpty() && removed < cellsToRemove) {
-            val index = positions.removeAt(0)
-            val backup = grid[index]
-            if (backup == 0) continue
-            grid[index] = 0
-            val solutions = solver.countSolutions(grid, limit = 2)
-            if (solutions != 1) {
-                grid[index] = backup
-            } else {
-                removed += 1
-            }
-        }
+        val positions = (0 until 81).shuffled(Random).take(cellsToRemove)
+        positions.forEach { grid[it] = 0 }
     }
 }
