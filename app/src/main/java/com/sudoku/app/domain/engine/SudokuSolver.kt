@@ -18,30 +18,6 @@ class SudokuSolver {
         return false
     }
 
-    fun countSolutions(grid: IntArray, limit: Int = 2): Int {
-        var count = 0
-        fun search(): Boolean {
-            val emptyIndex = grid.indexOfFirst { it == 0 }
-            if (emptyIndex == -1) {
-                count += 1
-                return count >= limit
-            }
-            val row = emptyIndex / 9
-            val col = emptyIndex % 9
-            for (num in 1..9) {
-                if (isSafe(grid, row, col, num)) {
-                    grid[emptyIndex] = num
-                    if (search()) return true
-                    grid[emptyIndex] = 0
-                }
-            }
-            return false
-        }
-
-        search()
-        return count
-    }
-
     fun isValidSolution(grid: IntArray): Boolean {
         if (grid.size != 81 || grid.any { it !in 1..9 }) return false
         for (row in 0 until 9) {
