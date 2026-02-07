@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             var isDarkTheme by rememberSaveable { mutableStateOf(false) }
             SudokuTheme(isDarkTheme = isDarkTheme) {
+            SudokuTheme {
                 val navController = rememberNavController()
                 val puzzleRepository = remember { AppModule.providePuzzleRepository() }
                 val gameViewModel = remember {
@@ -49,6 +51,7 @@ class MainActivity : ComponentActivity() {
                             },
                             isDarkTheme = isDarkTheme,
                             onToggleTheme = { isDarkTheme = it }
+                            }
                         )
                     }
                     composable(

@@ -21,6 +21,7 @@ class InMemoryPuzzleRepository(
         val grid = puzzle.toGrid()
         if (grid.any { it == 0 }) return false
         return grid.contentEquals(puzzle.solution)
+        return solver.isValidSolution(grid)
     }
 
     override suspend fun saveGameState(puzzle: Puzzle) {

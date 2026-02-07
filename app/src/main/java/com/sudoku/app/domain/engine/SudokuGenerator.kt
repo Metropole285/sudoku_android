@@ -66,5 +66,7 @@ class SudokuGenerator(
                 removed += 1
             }
         }
+        val positions = (0 until 81).shuffled(Random).take(cellsToRemove)
+        positions.forEach { grid[it] = 0 }
     }
 }

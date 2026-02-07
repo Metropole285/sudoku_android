@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Switch
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +22,7 @@ fun HomeScreen(
     onOpenLeaderboard: () -> Unit,
     isDarkTheme: Boolean,
     onToggleTheme: (Boolean) -> Unit
+    onOpenLeaderboard: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

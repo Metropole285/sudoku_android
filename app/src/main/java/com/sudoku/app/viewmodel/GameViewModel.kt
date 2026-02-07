@@ -26,6 +26,11 @@ class GameViewModel(
             incorrectCells = emptySet(),
             selectedRow = null,
             selectedCol = null,
+
+    suspend fun startNewGame(difficulty: Difficulty) {
+        val puzzle = generatePuzzleUseCase(difficulty)
+        _uiState.value = _uiState.value.copy(
+            puzzle = puzzle,
             isCompleted = false,
             errorMessage = null
         )
@@ -104,6 +109,12 @@ class GameViewModel(
             errorMessage = null
         )
     }
+        val isValid = validateSolutionUseCase(puzzle)
+        _uiState.value = _uiState.value.copy(
+            isCompleted = isValid,
+            errorMessage = if (isValid) null else "Solution is not valid."
+        )
+    }
 }
 
 data class GameUiState(
@@ -137,3 +148,6 @@ private fun computeIncorrectCells(
         cell.value != 0 && cell.value != solution[index]
     }.map { cell -> CellPosition(cell.row, cell.col) }.toSet()
 }
+    val isCompleted: Boolean = false,
+    val errorMessage: String? = null
+)
